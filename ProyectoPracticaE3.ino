@@ -1,5 +1,10 @@
 #include <SoftwareSerial.h>
+#include <Servo.h>
+
 SoftwareSerial Blue(8,9);
+
+Servo servoMotor1;
+Servo servoMotor2;
 
 const byte AlPush1 = 2;
 const byte AlPush2 = 3;
@@ -11,6 +16,7 @@ const byte LED1 = 5;
 const byte LED2 = 4;
 const byte LED3 = 7;
 const byte LED4 = 6;
+const byte NextChar = 12;
 const byte buzzer = 13;
 
 int EntradasActivadas[8]={0,0,0,0,0,0,0,0};   //Lectura de entradas
@@ -25,9 +31,10 @@ char LentraEnviada;   //Envio de mensaje letra por letra
 
 char LetraRecibir;
 char LetraActiva;
+int w;
 String MensajeRecibir;
 String MensajeRecibido;
-int SalidasActivas[6]={0,0,0,0,0,0};
+//int SalidasActivas[6]={0,0,0,0,0,0};
 
 void Buzzer();
 
@@ -35,7 +42,11 @@ void Buzzer();
 void setup() {
 
   Serial.begin(9600);
+  
   Blue.begin(9600);
+
+  servoMotor1.attach(10);
+  servoMotor2.attach(11);
   
   pinMode(AlPush1, OUTPUT);
   pinMode(AlPush2, OUTPUT);
@@ -43,6 +54,7 @@ void setup() {
   pinMode(LED2, OUTPUT);
   pinMode(LED3, OUTPUT);
   pinMode(LED4, OUTPUT);
+  pinMode(NextChar,  INPUT);
   pinMode(buzzer, OUTPUT);
   //pinMode(Push12, INPUT);
   //pinMode(Push34, INPUT);
@@ -56,8 +68,12 @@ void setup() {
   digitalWrite(LED4, LOW);
   digitalWrite(buzzer, LOW);
 
+  servoMotor1.write(0);
+  servoMotor2.write(0);
+
   LetraEnviar=0;
   ConfirmarEnvio=false;
+  w=0;
 }
 
 void loop() {
@@ -338,33 +354,240 @@ void loop() {
       }
     }
 
-  /*for(int j=0; j<=MensajeRecibido.length(); j++){
 
-    switch (MensajeRecibido.charAt(j)) {
-      case 1:
-      Letra = 'A';
-      break;
-    case 5:
-      Letra = 'B';
-      break;
-    default:
-      Letra = ' ';
-      break;
-    }
-    
-  }*/
-  
-  if(MensajeRecibido == "a"){
+
+
+  LetraActiva=MensajeRecibido.charAt(w);
+
+  switch(LetraActiva) {
+  case 'a':
     digitalWrite(LED1, HIGH);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, LOW);
     digitalWrite(LED4, LOW);
-    }else if(MensajeRecibido == "b"){
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'b':
     digitalWrite(LED1, HIGH);
     digitalWrite(LED2, LOW);
     digitalWrite(LED3, HIGH);
     digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'c':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'd':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;    
+  case 'e':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'f':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'g':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'h':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'i':
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'j':
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'k':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  case 'l':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'm':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'n':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'o':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'p':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'q':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'r':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 's':
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 't':
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(0);
+    break;
+  case 'u':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(90);
+    break;
+  case 'v':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(90);
+    break;
+  case 'w':
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(0);
+    servoMotor2.write(90);
+    break;
+  case 'x':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(90);
+    servoMotor2.write(90);
+    break;
+  case 'y':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(90);
+    break;
+  case 'z':
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, HIGH);
+    servoMotor1.write(90);
+    servoMotor2.write(90);
+    break; 
+  default:
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    digitalWrite(LED4, LOW);
+    servoMotor1.write(0);
+    servoMotor2.write(0);
+    break;
+  }
+
+
+  if( digitalRead(NextChar) && w != MensajeRecibido.length()){
+      w = w+1;
+      Buzzer();
+    } if(digitalRead(NextChar) && w == MensajeRecibido.length()){
+      w=0;
+      Buzzer();
+      MensajeRecibido="";
     }
+  Serial.println(w);
   
 }
 
